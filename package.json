@@ -1,0 +1,28 @@
+{
+  "name": "network-chronicle",
+  "version": "1.0.0",
+  "private": true,
+  "description": "计算机网络发展编年史 60s 立体科普动画（Three.js + Remotion + GSAP）",
+  "scripts": {
+    "dev": "remotion studio",
+    "render": "remotion render NetworkChronicle out/network-chronicle.mp4",
+    "still": "remotion still NetworkChronicle out/frame.png",
+    "typecheck": "tsc --noEmit",
+    "review": "node scripts/render-review.mjs",
+    "validate": "node scripts/validate-motion.mjs"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "gsap": "^3.12.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.0",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/three": "^0.186.0",
+    "typescript": "^5.5.0"
+  }
+}
