@@ -1,0 +1,17 @@
+{
+  "signature": "a91d28f66286a28e02ef33eb3c99149dfb570e308568e8232daaf577e0380381",
+  "durationSeconds": 4.32,
+  "rate": "+10%",
+  "captions": [
+    {
+      "startMs": 100,
+      "endMs": 2375,
+      "text": "以太网，让电脑连起来。"
+    },
+    {
+      "startMs": 2375,
+      "endMs": 4320,
+      "text": "共享一条电缆。"
+    }
+  ]
+}

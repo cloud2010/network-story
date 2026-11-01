@@ -145,10 +145,27 @@ export const createPhysicalScene = (kind: PhysicalKind, color: string): SceneRig
   const packetOn = (path: THREE.Curve<THREE.Vector3>, delay: number, speed = 0.33, packetColor = color, size = 0.085): void => {
     const packet = orb(packetColor, size);
     group.add(packet);
+    const positions = new Float32Array(8 * 3);
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const trail = new THREE.Points(geometry, new THREE.PointsMaterial({color: packetColor, size: size * 0.85, transparent: true, opacity: 0.65, depthWrite: false, toneMapped: false}));
+    group.add(trail);
     ticks.push((time) => {
       const t = ((time - delay) * speed % 1 + 1) % 1;
       packet.position.copy(path.getPoint(t));
       packet.visible = time > delay;
+      trail.visible = packet.visible;
+      positions.fill(0);
+      let count = 0;
+      for (let i = 0; i < 8; i++) {
+        const behind = t - (i + 1) * 0.014;
+        if (behind < 0) break;
+        path.getPoint(behind).toArray(positions, count++ * 3);
+      }
+      geometry.setDrawRange(0, count);
+      geometry.attributes.position.needsUpdate = true;
+      // The trail moves around the whole route; do not retain a stale bound.
+      trail.frustumCulled = false;
       packet.scale.setScalar(0.7 + Math.sin(t * Math.PI) * 0.5);
     });
   };
@@ -283,11 +300,11 @@ export const createPhysicalScene = (kind: PhysicalKind, color: string): SceneRig
     for (let i = 0; i < 4; i++) {
       // The hoops carry the signal; the hemisphere is only an atmospheric hint.
       // Draw one surface so overlapping wavefronts never mask the physical devices.
-      const waveMaterial = new THREE.MeshBasicMaterial({color, transparent: true, opacity: 0.008, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.FrontSide});
+      const waveMaterial = new THREE.MeshBasicMaterial({color, transparent: true, opacity: 0.015, depthWrite: false, toneMapped: false, side: THREE.FrontSide});
       const shell = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.5), waveMaterial);
       shell.position.set(0, -0.6, 0);
       group.add(shell);
-      const hoopMaterial = new THREE.MeshBasicMaterial({color, transparent: true, opacity: 0.4, depthWrite: false, blending: THREE.AdditiveBlending});
+      const hoopMaterial = new THREE.MeshBasicMaterial({color, transparent: true, opacity: 0.4, depthWrite: false, toneMapped: false});
       const hoop = new THREE.Mesh(new THREE.TorusGeometry(1, 0.013, 6, 80), hoopMaterial);
       hoop.rotation.x = Math.PI / 2;
       hoop.position.set(0, -0.7, 0);
@@ -298,7 +315,7 @@ export const createPhysicalScene = (kind: PhysicalKind, color: string): SceneRig
         shell.scale.setScalar(radius);
         hoop.scale.setScalar(radius);
         shell.visible = hoop.visible = time > 0.6;
-        waveMaterial.opacity = Math.sin(p * Math.PI) * 0.008;
+        waveMaterial.opacity = Math.sin(p * Math.PI) * 0.015;
         hoopMaterial.opacity = Math.sin(p * Math.PI) * 0.38;
       });
     }
@@ -412,7 +429,7 @@ export const createPhysicalScene = (kind: PhysicalKind, color: string): SceneRig
       const path = new THREE.LineCurve3(start, target);
       packetOn(path, 0.8 + i * 0.08, 0.9, color, 0.065);
       packetOn(path, 1.3 + i * 0.08, -0.9, '#edf7ff', 0.04);
-      const beam = new THREE.Mesh(new THREE.ConeGeometry(0.3, start.distanceTo(target), 16, 1, true), new THREE.MeshBasicMaterial({color, transparent: true, opacity: 0.042, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending}));
+      const beam = new THREE.Mesh(new THREE.ConeGeometry(0.3, start.distanceTo(target), 16, 1, true), new THREE.MeshBasicMaterial({color, transparent: true, opacity: 0.06, side: THREE.DoubleSide, depthWrite: false, toneMapped: false}));
       beam.position.copy(start).lerp(target, 0.5);
       beam.quaternion.setFromUnitVectors(v(0, 1, 0), start.clone().sub(target).normalize());
       add(beam, 0.85 + i * 0.06);

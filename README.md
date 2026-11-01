@@ -2,7 +2,7 @@
 
 用 **Three.js + Remotion + GSAP** 制作的 60 秒立体科普动画。影片沿着 1969—2019 年的 10 个里程碑，把网络技术变成可以看见的场景：四台终端交换数据包、TCP 三次握手、DNS 分层查询、无线电波、地址空间扩张，以及 5G 智慧城市。
 
-视觉采用深色空间、实体设备、发光链路和缓慢环绕镜头；左侧文字说明原理，底部时间轴标记历史位置。当前工程只包含画面，未配置配音、音乐或音效。
+视觉采用明亮的冰蓝色展台、实体设备、彩色链路和缓慢环绕镜头，配合数据包拖尾、环形扫描与扩散波纹。左侧深色文字说明原理，底部时间轴标记历史位置，字幕独立显示在时间轴上方。影片已接入 **Edge TTS 中文男声云希（`zh-CN-YunxiNeural`）**，包含 12 段配音和 24 句同步字幕。
 
 ## 视频规格
 
@@ -15,6 +15,8 @@
 | 视频输出 | `out/network-chronicle.mp4` |
 | 单帧输出 | `out/frame.png` |
 | 分镜检查输出 | `out/review/` 下的 12 张 PNG |
+| 配音素材 | `public/narration/` 下的 12 个 WAV |
+| 独立字幕 | `public/narration/network-chronicle.srt` |
 
 ## 安装与预览
 
@@ -70,6 +72,27 @@ Remove-Item Env:\REMOTION_GL
 
 检查脚本使用当前 CLI 依赖树中的 `@remotion/bundler` 和 `@remotion/renderer`。软件渲染包含完整的三维与泛光处理，耗时可能明显增加。
 
+## 配音与字幕
+
+仓库中的配音是实际通过 [edge-tts](https://github.com/rany2/edge-tts) 合成的本地音频；预览与视频渲染不需要连接 TTS 服务。字幕已烧录在画面中，也提供可单独使用的 UTF-8 SRT 文件。
+
+修改 [`src/data/narration-script.json`](src/data/narration-script.json) 后重新生成：
+
+```bash
+# Python 3.10+；第一次生成前安装
+python -m pip install -r requirements-narration.txt
+
+# 需要联网访问微软 Edge TTS 服务
+npm run narration
+
+# 强制重新合成所有章节
+npm run narration -- --force
+```
+
+默认使用云希男声和稍低的音调。每章配音从章节开始后 0.3 秒进入，结尾至少留出 0.2 秒；脚本会检查真实音频长度，必要时重新合成并小幅加快语速，超过上限则要求精简旁白，避免截断或跨章。生成音频按统一响度处理，字幕时间来自 Edge 返回的句子边界，停顿时自动隐藏。每句可分别设置 `speech`（发音文本）与 `caption`（屏幕字幕，例如把“一百二十八”显示为“128”）。
+
+生成脚本复用 Remotion 自带的 FFmpeg，支持按旁白内容缓存，最后统一发布 [`src/data/narration-timing.json`](src/data/narration-timing.json)。更改章节时长、帧率或章节数量时，请同步修改配音脚本配置并重新生成；画面会检查总帧数及帧率是否匹配。
+
 `validate` 直接运行实际场景代码，比较首次跳转与反向拖动后的对象状态、材质、几何数据和实例矩阵，并检查资源释放；无需启动浏览器或 GPU。视觉质量仍需通过 `review` 和成片检查。
 
 ## 内容与分镜
@@ -97,10 +120,11 @@ Remove-Item Env:\REMOTION_GL
 
 ## 渲染与动画架构
 
-`NetworkChronicle` 组合两层画面：
+`NetworkChronicle` 组合三维画面、文字与配音字幕：
 
 - **`ThreeStage`**：管理 Three.js 的 WebGL 渲染器、透视相机、灯光、材质与各章场景。通过 `EffectComposer` 依次执行 `RenderPass`、`UnrealBloomPass` 与 `OutputPass`，形成发光数据链路和空间层次。
 - **`CinematicOverlay`**：使用 React 与 CSS 绘制中文标题、年份、原理说明、三个步骤、数据指标与底部时间轴，并用 GSAP 的缓动函数控制逐帧入场。
+- **`Narration`**：按章节挂载本地配音，并按照同一份语音时间戳显示字幕。
 
 动画的时间源是 Remotion 当前帧。`src/lib/motion.ts` 创建处于暂停状态的 GSAP 镜头时间线，并在每一帧主动 seek 到 `frame / fps` 对应的局部时间；场景中的数据包、波纹和实例矩阵也由时间直接计算。因此，不依赖播放经过的真实时间来推进动画，便于拖动预览和离线逐帧导出。
 
@@ -123,12 +147,15 @@ network-chronicle/
 │   ├── Root.tsx                  # 注册 Composition 和视频规格
 │   ├── NetworkChronicle.tsx      # 组合三维场景与文字层
 │   ├── data/
-│   │   └── milestones.ts        # 10 个里程碑、文案、强调色与时长
+│   │   ├── milestones.ts        # 10 个里程碑、文案、强调色与时长
+│   │   ├── narration-script.json # 配音文本、男声与章节节奏
+│   │   └── narration-timing.json # 生成的实际语音时间戳
 │   ├── lib/
 │   │   └── motion.ts            # GSAP 镜头时间线与缓动工具
 │   ├── components/
 │   │   ├── ThreeStage.tsx       # WebGL、相机、后处理与场景调度
-│   │   └── CinematicOverlay.tsx # 标题、原理步骤、指标与时间轴
+│   │   ├── CinematicOverlay.tsx # 标题、原理步骤、指标与时间轴
+│   │   └── Narration.tsx        # 配音播放与同步字幕
 │   └── three/
 │       ├── types.ts             # 场景生命周期与标签类型
 │       ├── primitives.ts        # 设备、链路、光点等基础模型
@@ -137,7 +164,9 @@ network-chronicle/
 │       └── worldScene.ts        # 网络星球
 ├── scripts/
 │   ├── render-review.mjs        # 12 张分镜检查图
-│   └── validate-motion.mjs      # 寻帧确定性与资源生命周期检查
+│   ├── validate-motion.mjs      # 寻帧确定性与资源生命周期检查
+│   └── generate-narration.py    # Edge TTS 配音、响度处理与字幕
+├── public/narration/            # 本地 WAV、缓存元数据与 SRT
 ├── out/                        # 执行导出命令后生成的产物
 ├── remotion.config.ts          # ANGLE、并发 1、JPEG 中间帧、覆盖输出
 ├── tsconfig.json
@@ -162,13 +191,13 @@ network-chronicle/
 | `accent` | 当前章节的三维与文字强调色 |
 | `metric`、`metricLabel` | 关键数据或技术标识及解释 |
 
-修改配色优先编辑各里程碑的 `accent`。调整模型、数据包路径或无线效果时，编辑对应的 `physicalScenes.ts`、`protocolScenes.ts` 或 `worldScene.ts`；调整灯光、泛光和相机时，编辑 `ThreeStage.tsx` 与 `motion.ts`；修改字体、排版和开场片尾文案时，编辑 `CinematicOverlay.tsx`。
+修改配色优先编辑各里程碑的 `accent`，全局明亮底色与文字色位于 `src/lib/theme.ts`。调整模型、数据包路径或无线效果时，编辑对应的 `physicalScenes.ts`、`protocolScenes.ts` 或 `worldScene.ts`；调整灯光、泛光和相机时，编辑 `ThreeStage.tsx` 与 `motion.ts`；修改字体、排版和开场片尾文案时，编辑 `CinematicOverlay.tsx`。当前泛光阈值高于浅色背景，主要保留数据包亮芯的发光，避免白色展台过曝。
 
 默认节奏按 **5 秒开场 + 10 × 5 秒章节 + 5 秒片尾** 设计。更改时长或增减里程碑时，需要一并检查 `milestones.ts` 的时长常量、`motion.ts` 的 5 秒镜头轨迹、场景路由、时间轴文字以及检查脚本的取帧位置。新增场景还需扩展 `Motif` 类型与对应工厂函数。
 
 ## 字体与素材
 
-模型、链路、粒子与界面均由代码绘制，当前无需额外图片或视频素材。中文优先使用 `Microsoft YaHei`、`PingFang SC` 或 `Noto Sans SC`，数字与英文使用 `Cascadia Code` 或 `Consolas`。工程未打包字体文件，跨平台渲染时应检查字体回退、换行和标签位置。
+模型、链路、粒子与界面均由代码绘制，无需额外图片或视频素材；配音与字幕作为本地素材保存在 `public/narration/`。中文优先使用 `Microsoft YaHei`、`PingFang SC` 或 `Noto Sans SC`，数字与英文使用 `Cascadia Code` 或 `Consolas`。工程未打包字体文件，跨平台渲染时应检查字体回退、换行和标签位置。
 
 ## 历史资料
 

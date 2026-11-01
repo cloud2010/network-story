@@ -1,0 +1,247 @@
+{
+  "voice": "zh-CN-YunxiNeural",
+  "fps": 30,
+  "totalFrames": 1800,
+  "clips": [
+    {
+      "id": "opening",
+      "src": "narration/opening.wav",
+      "from": 9,
+      "durationInFrames": 129,
+      "durationSeconds": 4.272,
+      "rate": "+10%",
+      "captions": [
+        {
+          "startMs": 400,
+          "endMs": 2584,
+          "text": "一次连接，改变世界。"
+        },
+        {
+          "startMs": 2584,
+          "endMs": 4572,
+          "text": "看懂网络的进化。"
+        }
+      ]
+    },
+    {
+      "id": "arpanet",
+      "src": "narration/arpanet.wav",
+      "from": 159,
+      "durationInFrames": 132,
+      "durationSeconds": 4.368,
+      "rate": "+16%",
+      "captions": [
+        {
+          "startMs": 5400,
+          "endMs": 7681,
+          "text": "四个节点，连成阿帕网。"
+        },
+        {
+          "startMs": 7681,
+          "endMs": 9668,
+          "text": "数据分包传送。"
+        }
+      ]
+    },
+    {
+      "id": "ethernet",
+      "src": "narration/ethernet.wav",
+      "from": 309,
+      "durationInFrames": 130,
+      "durationSeconds": 4.32,
+      "rate": "+10%",
+      "captions": [
+        {
+          "startMs": 10400,
+          "endMs": 12675,
+          "text": "以太网，让电脑连起来。"
+        },
+        {
+          "startMs": 12675,
+          "endMs": 14620,
+          "text": "共享一条电缆。"
+        }
+      ]
+    },
+    {
+      "id": "tcp",
+      "src": "narration/tcp.wav",
+      "from": 459,
+      "durationInFrames": 132,
+      "durationSeconds": 4.368,
+      "rate": "+25%",
+      "captions": [
+        {
+          "startMs": 15400,
+          "endMs": 17260,
+          "text": "网络有了统一协议。"
+        },
+        {
+          "startMs": 17260,
+          "endMs": 19668,
+          "text": "三次握手，可靠传输。"
+        }
+      ]
+    },
+    {
+      "id": "dns",
+      "src": "narration/dns.wav",
+      "from": 609,
+      "durationInFrames": 132,
+      "durationSeconds": 4.368,
+      "rate": "+23%",
+      "captions": [
+        {
+          "startMs": 20400,
+          "endMs": 22261,
+          "text": "域名，是网络的名字。"
+        },
+        {
+          "startMs": 22261,
+          "endMs": 24668,
+          "text": "逐级查询，找到地址。"
+        }
+      ]
+    },
+    {
+      "id": "web",
+      "src": "narration/web.wav",
+      "from": 759,
+      "durationInFrames": 132,
+      "durationSeconds": 4.392,
+      "rate": "+23%",
+      "captions": [
+        {
+          "startMs": 25400,
+          "endMs": 27343,
+          "text": "文档通过超链接相连。"
+        },
+        {
+          "startMs": 27343,
+          "endMs": 29692,
+          "text": "万维网，由此诞生。"
+        }
+      ]
+    },
+    {
+      "id": "mosaic",
+      "src": "narration/mosaic.wav",
+      "from": 909,
+      "durationInFrames": 132,
+      "durationSeconds": 4.368,
+      "rate": "+15%",
+      "captions": [
+        {
+          "startMs": 30400,
+          "endMs": 31963,
+          "text": "图文走进浏览器。"
+        },
+        {
+          "startMs": 31963,
+          "endMs": 34668,
+          "text": "点击鼠标，探索世界。"
+        }
+      ]
+    },
+    {
+      "id": "wifi",
+      "src": "narration/wifi.wav",
+      "from": 1059,
+      "durationInFrames": 132,
+      "durationSeconds": 4.392,
+      "rate": "+10%",
+      "captions": [
+        {
+          "startMs": 35400,
+          "endMs": 37686,
+          "text": "告别网线，无线接入。"
+        },
+        {
+          "startMs": 37686,
+          "endMs": 39692,
+          "text": "比特穿过空气。"
+        }
+      ]
+    },
+    {
+      "id": "mobile",
+      "src": "narration/mobile.wav",
+      "from": 1209,
+      "durationInFrames": 132,
+      "durationSeconds": 4.368,
+      "rate": "+23%",
+      "captions": [
+        {
+          "startMs": 40400,
+          "endMs": 42505,
+          "text": "智能手机，随时在线。"
+        },
+        {
+          "startMs": 42505,
+          "endMs": 44668,
+          "text": "互联网，装进口袋。"
+        }
+      ]
+    },
+    {
+      "id": "ipv6",
+      "src": "narration/ipv6.wav",
+      "from": 1359,
+      "durationInFrames": 128,
+      "durationSeconds": 4.248,
+      "rate": "+10%",
+      "captions": [
+        {
+          "startMs": 45400,
+          "endMs": 47664,
+          "text": "地址扩展到 128 位。"
+        },
+        {
+          "startMs": 47664,
+          "endMs": 49548,
+          "text": "连接更多设备。"
+        }
+      ]
+    },
+    {
+      "id": "5g",
+      "src": "narration/5g.wav",
+      "from": 1509,
+      "durationInFrames": 129,
+      "durationSeconds": 4.296,
+      "rate": "+10%",
+      "captions": [
+        {
+          "startMs": 50400,
+          "endMs": 52107,
+          "text": "5G 开启商用。"
+        },
+        {
+          "startMs": 52107,
+          "endMs": 54596,
+          "text": "低时延，让万物协同。"
+        }
+      ]
+    },
+    {
+      "id": "closing",
+      "src": "narration/closing.wav",
+      "from": 1659,
+      "durationInFrames": 132,
+      "durationSeconds": 4.368,
+      "rate": "+36%",
+      "captions": [
+        {
+          "startMs": 55400,
+          "endMs": 57552,
+          "text": "从四个节点，到万物互联。"
+        },
+        {
+          "startMs": 57552,
+          "endMs": 59668,
+          "text": "连接未来，由你创造。"
+        }
+      ]
+    }
+  ]
+}

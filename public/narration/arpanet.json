@@ -1,0 +1,17 @@
+{
+  "signature": "9422f9b9f85333daac87825708b6517fd14e863d3bdabaf62426af71a4cf2a54",
+  "durationSeconds": 4.368,
+  "rate": "+16%",
+  "captions": [
+    {
+      "startMs": 100,
+      "endMs": 2381,
+      "text": "四个节点，连成阿帕网。"
+    },
+    {
+      "startMs": 2381,
+      "endMs": 4368,
+      "text": "数据分包传送。"
+    }
+  ]
+}

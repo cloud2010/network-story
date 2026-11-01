@@ -1,0 +1,59 @@
+{
+  "voice": "zh-CN-YunxiNeural",
+  "rate": "+10%",
+  "pitch": "-2Hz",
+  "fps": 30,
+  "segmentFrames": 150,
+  "leadInFrames": 9,
+  "tailFrames": 6,
+  "segments": [
+    {"id": "opening", "sentences": [
+      {"speech": "一次连接，改变世界。", "caption": "一次连接，改变世界。"},
+      {"speech": "看懂网络的进化。", "caption": "看懂网络的进化。"}
+    ]},
+    {"id": "arpanet", "sentences": [
+      {"speech": "四个节点，连成阿帕网。", "caption": "四个节点，连成阿帕网。"},
+      {"speech": "数据分包传送。", "caption": "数据分包传送。"}
+    ]},
+    {"id": "ethernet", "sentences": [
+      {"speech": "以太网，让电脑连起来。", "caption": "以太网，让电脑连起来。"},
+      {"speech": "共享一条电缆。", "caption": "共享一条电缆。"}
+    ]},
+    {"id": "tcp", "sentences": [
+      {"speech": "网络有了统一协议。", "caption": "网络有了统一协议。"},
+      {"speech": "三次握手，可靠传输。", "caption": "三次握手，可靠传输。"}
+    ]},
+    {"id": "dns", "sentences": [
+      {"speech": "域名，是网络的名字。", "caption": "域名，是网络的名字。"},
+      {"speech": "逐级查询，找到地址。", "caption": "逐级查询，找到地址。"}
+    ]},
+    {"id": "web", "sentences": [
+      {"speech": "文档通过超链接相连。", "caption": "文档通过超链接相连。"},
+      {"speech": "万维网，由此诞生。", "caption": "万维网，由此诞生。"}
+    ]},
+    {"id": "mosaic", "sentences": [
+      {"speech": "图文走进浏览器。", "caption": "图文走进浏览器。"},
+      {"speech": "点击鼠标，探索世界。", "caption": "点击鼠标，探索世界。"}
+    ]},
+    {"id": "wifi", "sentences": [
+      {"speech": "告别网线，无线接入。", "caption": "告别网线，无线接入。"},
+      {"speech": "比特穿过空气。", "caption": "比特穿过空气。"}
+    ]},
+    {"id": "mobile", "sentences": [
+      {"speech": "智能手机，随时在线。", "caption": "智能手机，随时在线。"},
+      {"speech": "互联网，装进口袋。", "caption": "互联网，装进口袋。"}
+    ]},
+    {"id": "ipv6", "sentences": [
+      {"speech": "地址扩展到一百二十八位。", "caption": "地址扩展到 128 位。"},
+      {"speech": "连接更多设备。", "caption": "连接更多设备。"}
+    ]},
+    {"id": "5g", "sentences": [
+      {"speech": "5G 开启商用。", "caption": "5G 开启商用。"},
+      {"speech": "低时延，让万物协同。", "caption": "低时延，让万物协同。"}
+    ]},
+    {"id": "closing", "sentences": [
+      {"speech": "从四个节点，到万物互联。", "caption": "从四个节点，到万物互联。"},
+      {"speech": "连接未来，由你创造。", "caption": "连接未来，由你创造。"}
+    ]}
+  ]
+}

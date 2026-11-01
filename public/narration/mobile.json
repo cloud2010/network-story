@@ -1,0 +1,17 @@
+{
+  "signature": "abbc85e40d0bec6706a01e25630d35dedacd1ad6f0cbb3252033f44a4a121f56",
+  "durationSeconds": 4.368,
+  "rate": "+23%",
+  "captions": [
+    {
+      "startMs": 100,
+      "endMs": 2205,
+      "text": "智能手机，随时在线。"
+    },
+    {
+      "startMs": 2205,
+      "endMs": 4368,
+      "text": "互联网，装进口袋。"
+    }
+  ]
+}

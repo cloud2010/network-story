@@ -1,4 +1,5 @@
 import React from 'react';
+import {INK, MUTED, WORLD_ACCENT} from '../lib/theme';
 import {gsap} from 'gsap';
 import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
 import {
@@ -10,8 +11,6 @@ import {
   type Milestone,
 } from '../data/milestones';
 
-const INK = '#f2f6f5';
-const MUTED = '#879a99';
 const MONO = '"Cascadia Code", "Consolas", monospace';
 const SANS = '"Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif';
 const expoOut = gsap.parseEase('expo.out');
@@ -61,7 +60,7 @@ const Header: React.FC<{frame: number; accent: string}> = ({frame, accent}) => {
     >
       <div style={{display: 'flex', alignItems: 'center', gap: 16}}>
         <span style={{width: 7, height: 7, background: accent, display: 'block'}} />
-        <span style={{fontFamily: MONO, fontSize: 16, letterSpacing: 3.2, color: '#c0cecc'}}>
+        <span style={{fontFamily: MONO, fontSize: 16, letterSpacing: 3.2, color: MUTED}}>
           NETWORK / A VISUAL HISTORY
         </span>
       </div>
@@ -80,8 +79,8 @@ const Timeline: React.FC<{
 }> = ({index, progress, accent, opacity}) => {
   const extent = clamp((index + progress) / (MILESTONES.length - 1));
   return (
-    <div style={{position: 'absolute', top: 943, left: 96, width: 1728, opacity}}>
-      <div style={{height: 1, width: '100%', background: 'rgba(182,213,209,.19)'}} />
+    <div style={{position: 'absolute', top: 969, left: 96, width: 1728, opacity}}>
+      <div style={{height: 1, width: '100%', background: 'rgba(65,105,145,.22)'}} />
       <div
         style={{
           position: 'absolute',
@@ -105,7 +104,7 @@ const Timeline: React.FC<{
                 left: selected ? -2 : -1,
                 width: selected ? 4 : 2,
                 height: selected ? 15 : 7,
-                background: selected ? accent : visited ? '#a4beb8' : '#475653',
+                background: selected ? accent : visited ? '#68849d' : '#a6b9ca',
                 boxShadow: selected ? `0 0 15px ${accent}66` : undefined,
               }}
             />
@@ -118,7 +117,7 @@ const Timeline: React.FC<{
                 fontSize: selected ? 20 : 17,
                 fontWeight: selected ? 700 : 400,
                 letterSpacing: 1,
-                color: selected ? INK : visited ? '#8da49f' : '#4e615c',
+                color: selected ? accent : visited ? '#526e88' : '#73889c',
               }}
             >
               {milestone.year}
@@ -134,14 +133,14 @@ const Timeline: React.FC<{
           fontFamily: MONO,
           fontSize: 12,
           letterSpacing: 2,
-          color: '#536963',
+          color: MUTED,
         }}
       >
         50 YEARS OF CONNECTION
       </div>
-      <div style={{position: 'absolute', right: 0, top: 73, fontSize: 14, color: '#6a817a'}}>
+      <div style={{position: 'absolute', right: 0, top: 73, fontSize: 14, color: MUTED}}>
         {String(index + 1).padStart(2, '0')}
-        <span style={{color: '#3e514b', marginLeft: 8}}> / 10</span>
+        <span style={{color: '#73889c', marginLeft: 8}}> / 10</span>
       </div>
     </div>
   );
@@ -180,7 +179,7 @@ const Chapter: React.FC<{frame: number; index: number; milestone: Milestone}> = 
               {String(index + 1).padStart(2, '0')}
             </span>
             <span style={{width: 32, height: 1, background: accent, opacity: 0.7}} />
-            <span style={{fontSize: 18, letterSpacing: 3, color: '#a7b9b3'}}>{milestone.era}</span>
+            <span style={{fontSize: 18, letterSpacing: 3, color: MUTED}}>{milestone.era}</span>
           </div>
         </Reveal>
         <Reveal frame={frame} start={1} style={{marginTop: 12}}>
@@ -210,7 +209,7 @@ const Chapter: React.FC<{frame: number; index: number; milestone: Milestone}> = 
           </div>
         </Reveal>
         <Reveal frame={frame} start={15} style={{marginTop: 29, width: 695}}>
-          <div style={{fontSize: 28, lineHeight: 1.65, color: '#c0cdc7', fontWeight: 400, whiteSpace: 'pre-line'}}>
+          <div style={{fontSize: 28, lineHeight: 1.65, color: '#405b75', fontWeight: 400, whiteSpace: 'pre-line'}}>
             {milestone.mechanism}
           </div>
         </Reveal>
@@ -225,7 +224,7 @@ const Chapter: React.FC<{frame: number; index: number; milestone: Milestone}> = 
           opacity: reveal(frame, 23, 22) * exit,
         }}
       >
-        <div style={{fontFamily: MONO, fontSize: 12, letterSpacing: 2, color: '#647e74', marginBottom: 20}}>
+        <div style={{fontFamily: MONO, fontSize: 12, letterSpacing: 2, color: MUTED, marginBottom: 20}}>
           HOW IT WORKS
         </div>
         <div style={{display: 'flex', gap: 28}}>
@@ -238,14 +237,14 @@ const Chapter: React.FC<{frame: number; index: number; milestone: Milestone}> = 
                   style={{
                     height: 2,
                     width: '100%',
-                    background: current ? accent : completed ? `${accent}55` : '#263b32',
+                    background: current ? accent : completed ? `${accent}55` : '#c6d5e3',
                     marginBottom: 18,
                   }}
                 />
-                <div style={{fontFamily: MONO, fontSize: 12, color: current ? accent : '#5b7268', marginBottom: 9}}>
+                <div style={{fontFamily: MONO, fontSize: 12, color: current ? accent : MUTED, marginBottom: 9}}>
                   0{stepIndex + 1}
                 </div>
-                <div style={{fontSize: 21, color: current ? INK : '#738e81', lineHeight: 1.4}}>{step}</div>
+                <div style={{fontSize: 21, color: current ? INK : MUTED, lineHeight: 1.4}}>{step}</div>
               </div>
             );
           })}
@@ -256,7 +255,7 @@ const Chapter: React.FC<{frame: number; index: number; milestone: Milestone}> = 
         style={{
           position: 'absolute',
           right: 96,
-          top: 767,
+          top: 745,
           textAlign: 'right',
           opacity: reveal(frame, 22, 28) * exit,
           transform: `translateY(${(1 - reveal(frame, 22, 28)) * 20}px)`,
@@ -265,7 +264,7 @@ const Chapter: React.FC<{frame: number; index: number; milestone: Milestone}> = 
         <div style={{fontFamily: MONO, fontSize: 69, lineHeight: 1.1, color: accent, letterSpacing: -3}}>
           {milestone.metric}
         </div>
-        <div style={{fontSize: 18, lineHeight: 1.5, marginTop: 10, color: '#8ba399', letterSpacing: 1}}>
+        <div style={{fontSize: 18, lineHeight: 1.5, marginTop: 10, color: MUTED, letterSpacing: 1}}>
           {milestone.metricLabel}
         </div>
       </div>
@@ -280,7 +279,7 @@ const Opening: React.FC<{frame: number}> = ({frame}) => {
   return (
     <div style={{opacity: exit}}>
       <Reveal frame={frame} start={12} style={{position: 'absolute', top: 219, left: 96}}>
-        <div style={{fontFamily: MONO, color: '#8beacb', fontSize: 18, letterSpacing: 5}}>1969 — 2019</div>
+        <div style={{fontFamily: MONO, color: WORLD_ACCENT, fontSize: 18, letterSpacing: 5}}>1969 — 2019</div>
       </Reveal>
       <div style={{position: 'absolute', top: 292, left: 90, width: 880}}>
         <Reveal frame={frame} start={17}>
@@ -290,18 +289,18 @@ const Opening: React.FC<{frame: number}> = ({frame}) => {
           <div style={{fontSize: 91, fontWeight: 700, lineHeight: 1.25, letterSpacing: -4}}>改变整个世界。</div>
         </Reveal>
       </div>
-      <div style={{position: 'absolute', top: 584, left: 96, height: 2, width: 89 * lineAmount, background: '#8beacb'}} />
+      <div style={{position: 'absolute', top: 584, left: 96, height: 2, width: 89 * lineAmount, background: WORLD_ACCENT}} />
       <Reveal frame={frame} start={44} style={{position: 'absolute', top: 620, left: 96, width: 665}}>
-        <div style={{fontSize: 26, color: '#a7bbb2', lineHeight: 1.7, letterSpacing: 1}}>
+        <div style={{fontSize: 26, color: MUTED, lineHeight: 1.7, letterSpacing: 1}}>
           从第一条消息，到连接万物。<br />
           看见 10 次技术跃迁背后的工作原理。
         </div>
       </Reveal>
-      <div style={{position: 'absolute', left: 96, bottom: 94, opacity: reveal(frame, 61), display: 'flex', alignItems: 'center', gap: 16}}>
-        <div style={{height: 1, width: 42, background: '#708e80'}} />
-        <span style={{fontSize: 16, letterSpacing: 3, color: '#708e80'}}>计算机网络发展编年史</span>
+      <div style={{position: 'absolute', left: 96, bottom: 57, opacity: reveal(frame, 61), display: 'flex', alignItems: 'center', gap: 16}}>
+        <div style={{height: 1, width: 42, background: MUTED}} />
+        <span style={{fontSize: 16, letterSpacing: 3, color: MUTED}}>计算机网络发展编年史</span>
       </div>
-      <div style={{position: 'absolute', right: 96, bottom: 92, fontFamily: MONO, fontSize: 14, letterSpacing: 2, color: '#577366', opacity: reveal(frame, 61)}}>
+      <div style={{position: 'absolute', right: 96, bottom: 57, fontFamily: MONO, fontSize: 14, letterSpacing: 2, color: MUTED, opacity: reveal(frame, 61)}}>
         10 MILESTONES / 50 YEARS
       </div>
     </div>
@@ -313,7 +312,7 @@ const Closing: React.FC<{frame: number}> = ({frame}) => {
   return (
     <div style={{opacity: fadeOut}}>
       <Reveal frame={frame} start={7} style={{position: 'absolute', left: 96, top: 221}}>
-        <div style={{fontFamily: MONO, fontSize: 17, letterSpacing: 4, color: '#8beacb'}}>THE NEXT CONNECTION</div>
+        <div style={{fontFamily: MONO, fontSize: 17, letterSpacing: 4, color: WORLD_ACCENT}}>THE NEXT CONNECTION</div>
       </Reveal>
       <div style={{position: 'absolute', left: 90, top: 295}}>
         <Reveal frame={frame} start={11}>
@@ -324,18 +323,18 @@ const Closing: React.FC<{frame: number}> = ({frame}) => {
         </Reveal>
       </div>
       <Reveal frame={frame} start={39} style={{position: 'absolute', left: 96, top: 624, width: 710}}>
-        <div style={{fontSize: 26, color: '#acbeb5', lineHeight: 1.8}}>
+        <div style={{fontSize: 26, color: MUTED, lineHeight: 1.8}}>
           协议让连接成为可能，<br />
           每一次突破，都让世界靠得更近。
         </div>
       </Reveal>
-      <Reveal frame={frame} start={58} style={{position: 'absolute', left: 96, bottom: 113}}>
+      <Reveal frame={frame} start={58} style={{position: 'absolute', left: 96, bottom: 57}}>
         <div style={{display: 'flex', alignItems: 'center', gap: 18}}>
-          <div style={{height: 1, width: 53, background: '#8beacb'}} />
-          <span style={{fontSize: 22, letterSpacing: 3, color: '#d3e0d9'}}>下一次连接，由我们创造。</span>
+          <div style={{height: 1, width: 53, background: WORLD_ACCENT}} />
+          <span style={{fontSize: 22, letterSpacing: 3, color: INK}}>下一次连接，由我们创造。</span>
         </div>
       </Reveal>
-      <div style={{position: 'absolute', right: 96, bottom: 91, fontFamily: MONO, fontSize: 14, letterSpacing: 2, color: '#577366', opacity: reveal(frame, 58)}}>
+      <div style={{position: 'absolute', right: 96, bottom: 57, fontFamily: MONO, fontSize: 14, letterSpacing: 2, color: MUTED, opacity: reveal(frame, 58)}}>
         1969 → TOMORROW
       </div>
     </div>
@@ -353,7 +352,7 @@ export const CinematicOverlay: React.FC = () => {
   const index = Math.max(0, Math.min(MILESTONES.length - 1, Math.floor(mainFrame / MILESTONE_DURATION)));
   const localFrame = mainFrame - index * MILESTONE_DURATION;
   const milestone = MILESTONES[index];
-  const accent = isOpening || isClosing ? '#8beacb' : milestone.accent;
+  const accent = isOpening || isClosing ? WORLD_ACCENT : milestone.accent;
   const scale = Math.min(width / 1920, height / 1080);
   return (
     <AbsoluteFill style={{pointerEvents: 'none', overflow: 'hidden'}}>
@@ -370,8 +369,8 @@ export const CinematicOverlay: React.FC = () => {
           color: INK,
         }}
       >
-        <div style={{position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(2,10,10,.54) 0%, rgba(2,10,10,.3) 34%, transparent 57%)'}} />
-        <div style={{position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 58% 43%, transparent 27%, rgba(0,6,7,.22) 88%)'}} />
+        <div style={{position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(248,251,255,.96) 0%, rgba(248,251,255,.78) 29%, rgba(248,251,255,.12) 48%, transparent 60%)'}} />
+        <div style={{position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 70% 35%, rgba(255,255,255,.12), transparent 66%)'}} />
         <Header frame={frame} accent={accent} />
         {isOpening ? <Opening frame={frame} /> : isClosing ? <Closing frame={frame - outroStart} /> : <Chapter frame={localFrame} index={index} milestone={milestone} />}
       </div>

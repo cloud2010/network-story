@@ -1,0 +1,17 @@
+{
+  "signature": "836abb31e1ea5502b9c6504721c8716f67358cce5f367f072e3153ad0d608e84",
+  "durationSeconds": 4.392,
+  "rate": "+23%",
+  "captions": [
+    {
+      "startMs": 100,
+      "endMs": 2043,
+      "text": "文档通过超链接相连。"
+    },
+    {
+      "startMs": 2043,
+      "endMs": 4392,
+      "text": "万维网，由此诞生。"
+    }
+  ]
+}

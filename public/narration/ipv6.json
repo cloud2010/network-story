@@ -1,0 +1,17 @@
+{
+  "signature": "5eb1e95482006c53aa85c89a05100995f549aa723db7bed9fe95fac41e174091",
+  "durationSeconds": 4.248,
+  "rate": "+10%",
+  "captions": [
+    {
+      "startMs": 100,
+      "endMs": 2364,
+      "text": "地址扩展到 128 位。"
+    },
+    {
+      "startMs": 2364,
+      "endMs": 4248,
+      "text": "连接更多设备。"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "signature": "1fd07ee2fd3be67eef4c1a1afe954a9800fb878e405fbe6529ec3cdb78574e2c",
+  "durationSeconds": 4.272,
+  "rate": "+10%",
+  "captions": [
+    {
+      "startMs": 100,
+      "endMs": 2284,
+      "text": "一次连接，改变世界。"
+    },
+    {
+      "startMs": 2284,
+      "endMs": 4272,
+      "text": "看懂网络的进化。"
+    }
+  ]
+}

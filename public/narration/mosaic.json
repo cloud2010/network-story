@@ -1,0 +1,17 @@
+{
+  "signature": "0d1dcdbc197fa9773a6f9a13ee1bc779ccc9c219f30fe5a6767eb22602661a14",
+  "durationSeconds": 4.368,
+  "rate": "+15%",
+  "captions": [
+    {
+      "startMs": 100,
+      "endMs": 1663,
+      "text": "图文走进浏览器。"
+    },
+    {
+      "startMs": 1663,
+      "endMs": 4368,
+      "text": "点击鼠标，探索世界。"
+    }
+  ]
+}

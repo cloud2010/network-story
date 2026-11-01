@@ -12,6 +12,7 @@ import {createProtocolScene} from '../three/protocolScenes';
 import {createWorldScene} from '../three/worldScene';
 import {disposeGroup} from '../three/primitives';
 import type {SceneRig} from '../three/types';
+import {INK, PAPER, WORLD_ACCENT, labelInk} from '../lib/theme';
 
 type Stage = {
   renderer: THREE.WebGLRenderer;
@@ -22,6 +23,8 @@ type Stage = {
   pivot: THREE.Group;
   stars: THREE.Points;
   ring: THREE.Mesh;
+  scan: THREE.Mesh;
+  ripples: THREE.Mesh[];
   transit: THREE.Group;
   transitMaterial: THREE.MeshBasicMaterial;
   rig: SceneRig | null;
@@ -44,37 +47,47 @@ export const ThreeStage: React.FC = () => {
       const renderer = new THREE.WebGLRenderer({canvas: canvas.current, antialias: true, alpha: false, preserveDrawingBuffer: true, powerPreference: 'high-performance'});
       renderer.setSize(width, height, false);
       renderer.setPixelRatio(1);
-      renderer.setClearColor('#070c10');
+      renderer.setClearColor(PAPER);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.15;
+      renderer.toneMappingExposure = 1.05;
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color('#070c10');
-      scene.fog = new THREE.FogExp2('#070c10', 0.018);
+      scene.background = new THREE.Color(PAPER);
+      scene.fog = new THREE.FogExp2(PAPER, 0.0085);
       const camera = new THREE.PerspectiveCamera(39, width / height, 0.1, 130);
       camera.setViewOffset(width, height, -width * 0.16, 0, width, height);
-      scene.add(new THREE.HemisphereLight('#cfecff', '#172b2d', 2.6));
-      const keyLight = new THREE.DirectionalLight('#fff0d2', 4.0);
+      scene.add(new THREE.HemisphereLight('#eef8ff', '#a8bacd', 2.3));
+      const keyLight = new THREE.DirectionalLight('#fff5e7', 3.1);
       keyLight.position.set(-3, 8, 6);
       scene.add(keyLight);
-      const rim = new THREE.DirectionalLight('#80bfff', 4.2);
+      const rim = new THREE.DirectionalLight('#a5d9ff', 3.3);
       rim.position.set(5, 4, -5);
       scene.add(rim);
-      const soft = new THREE.PointLight('#b7ffde', 65, 28, 2);
+      const soft = new THREE.PointLight('#d5f4ff', 45, 28, 2);
       soft.position.set(-4, 5, 4);
       scene.add(soft);
-      const floor = new THREE.Mesh(new THREE.PlaneGeometry(300, 300), new THREE.MeshStandardMaterial({color: '#0b161a', roughness: 0.42, metalness: 0.35}));
+      const floor = new THREE.Mesh(new THREE.PlaneGeometry(300, 300), new THREE.MeshBasicMaterial({color: '#e7f0f8', toneMapped: false}));
       floor.rotation.x = -Math.PI / 2;
       floor.position.y = -0.9;
       scene.add(floor);
-      const grid = new THREE.GridHelper(45, 45, '#203439', '#122126');
+      const grid = new THREE.GridHelper(45, 45, '#b5cbdc', '#cbdce9');
       grid.position.y = -0.89;
       (grid.material as THREE.Material).transparent = true;
-      (grid.material as THREE.Material).opacity = 0.32;
+      (grid.material as THREE.Material).opacity = 0.4;
       scene.add(grid);
-      const ring = new THREE.Mesh(new THREE.RingGeometry(6.7, 6.72, 160), new THREE.MeshBasicMaterial({color: '#40696a', transparent: true, opacity: 0.35, side: THREE.DoubleSide}));
+      const ring = new THREE.Mesh(new THREE.RingGeometry(6.7, 6.73, 160), new THREE.MeshBasicMaterial({color: WORLD_ACCENT, transparent: true, opacity: 0.24, side: THREE.DoubleSide, toneMapped: false}));
       ring.rotation.x = -Math.PI / 2;
       ring.position.y = -0.88;
       scene.add(ring);
+      const scan = new THREE.Mesh(new THREE.TorusGeometry(6.715, 0.032, 6, 72, Math.PI * 0.42), new THREE.MeshBasicMaterial({color: WORLD_ACCENT, transparent: true, opacity: 0.65, toneMapped: false}));
+      scan.position.y = -0.86;
+      scene.add(scan);
+      const ripples = Array.from({length: 3}, () => {
+        const ripple = new THREE.Mesh(new THREE.RingGeometry(0.98, 1, 120), new THREE.MeshBasicMaterial({color: WORLD_ACCENT, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false, toneMapped: false}));
+        ripple.rotation.x = -Math.PI / 2;
+        ripple.position.y = -0.87;
+        scene.add(ripple);
+        return ripple;
+      });
       const coords: number[] = [];
       for (let i = 0; i < 370; i++) {
         const a = i * 2.399963;
@@ -82,12 +95,12 @@ export const ThreeStage: React.FC = () => {
       }
       const starsGeometry = new THREE.BufferGeometry();
       starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(coords, 3));
-      const stars = new THREE.Points(starsGeometry, new THREE.PointsMaterial({color: '#9bbec4', size: 0.026, transparent: true, opacity: 0.45}));
+      const stars = new THREE.Points(starsGeometry, new THREE.PointsMaterial({color: '#5f9ab5', size: 0.035, transparent: true, opacity: 0.38}));
       scene.add(stars);
       const pivot = new THREE.Group();
       scene.add(pivot);
       const transit = new THREE.Group();
-      const transitMaterial = new THREE.MeshBasicMaterial({color: '#a9eee4', transparent: true, opacity: 0, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending, toneMapped: false});
+      const transitMaterial = new THREE.MeshBasicMaterial({color: WORLD_ACCENT, transparent: true, opacity: 0, depthWrite: false, depthTest: false, toneMapped: false});
       for (let i = 0; i < 64; i++) {
         const streak = new THREE.Mesh(new THREE.CylinderGeometry(0.009, 0.009, 1.8, 5), transitMaterial);
         streak.rotation.x = Math.PI / 2;
@@ -100,10 +113,11 @@ export const ThreeStage: React.FC = () => {
       target.samples = 4;
       const composer = new EffectComposer(renderer, target);
       composer.addPass(new RenderPass(scene, camera));
-      const bloom = new UnrealBloomPass(new THREE.Vector2(width / 2, height / 2), 0.46, 0.6, 0.85);
+      // Keep the pale stage below the bloom threshold; HDR packet cores glow.
+      const bloom = new UnrealBloomPass(new THREE.Vector2(width / 2, height / 2), 0.58, 0.55, 1.3);
       composer.addPass(bloom);
       composer.addPass(new OutputPass());
-      current = {renderer, composer, bloom, scene, camera, pivot, stars, ring, transit, transitMaterial, rig: null, key: -99, shot: createShot()};
+      current = {renderer, composer, bloom, scene, camera, pivot, stars, ring, scan, ripples, transit, transitMaterial, rig: null, key: -99, shot: createShot()};
       stage.current = current;
     } catch (error) {
       cancelRender(error instanceof Error ? error : new Error(String(error)));
@@ -151,7 +165,8 @@ export const ThreeStage: React.FC = () => {
           s.rig.labels?.forEach(label => {
             const node = document.createElement('div');
             node.textContent = label.text;
-            Object.assign(node.style, {position: 'absolute', fontFamily: 'Consolas, monospace', fontSize: '15px', letterSpacing: '1.8px', whiteSpace: 'nowrap', color: label.color ?? '#b3ccd1', padding: '8px 12px', borderLeft: `2px solid ${label.color ?? MILESTONES[Math.max(0, index)]?.accent ?? '#aaf5cc'}`, background: 'rgba(5,13,18,0.75)', transform: 'translate(-50%, -50%)'});
+            const ink = labelInk(label.color ?? INK);
+            Object.assign(node.style, {position: 'absolute', fontFamily: 'Consolas, monospace', fontSize: '15px', letterSpacing: '1.8px', whiteSpace: 'nowrap', color: ink, padding: '8px 12px', borderLeft: `2px solid ${ink}`, background: 'rgba(255,255,255,0.88)', boxShadow: '0 3px 14px rgba(43,83,117,0.07)', transform: 'translate(-50%, -50%)'});
             labels.current!.appendChild(node);
           });
         }
@@ -174,12 +189,25 @@ export const ThreeStage: React.FC = () => {
       s.pivot.updateMatrixWorld(true);
       s.stars.rotation.y = frame * 0.00013;
       s.ring.visible = !intro && !ending;
-      s.bloom.strength = ending ? 0.65 : index === 5 ? 0.14 : 0.43;
+      const accent = intro || ending ? WORLD_ACCENT : MILESTONES[index].accent;
+      (s.ring.material as THREE.MeshBasicMaterial).color.set(accent);
+      s.scan.visible = s.ring.visible;
+      s.scan.rotation.set(-Math.PI / 2, 0, -time * 0.62);
+      (s.scan.material as THREE.MeshBasicMaterial).color.set(accent);
+      s.ripples.forEach((ripple, i) => {
+        const wave = ((time * 0.28 + i / 3) % 1);
+        ripple.visible = s.ring.visible;
+        ripple.scale.setScalar(1 + wave * 6.3);
+        const material = ripple.material as THREE.MeshBasicMaterial;
+        material.color.set(accent);
+        material.opacity = Math.sin(wave * Math.PI) * (1 - wave) * 0.18;
+      });
+      s.bloom.strength = ending ? 0.7 : index === 5 ? 0.24 : 0.58;
       const duration = intro ? INTRO_DURATION : ending ? OUTRO_DURATION : MILESTONE_DURATION;
       const transition = Math.max(intro ? 0 : clamp(1 - localFrame / 10), ending ? 0 : clamp((localFrame - duration + 10) / 10));
       s.transit.visible = transition > 0;
       s.transitMaterial.opacity = transition * 0.65;
-      s.transitMaterial.color.set(intro || ending ? '#a9eee4' : MILESTONES[index].accent);
+      s.transitMaterial.color.set(accent);
       s.transit.children.forEach((streak, i) => {
         const angle = i * 2.399963;
         const radius = 2 + (i % 9) * 0.5;

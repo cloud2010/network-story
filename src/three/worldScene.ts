@@ -8,11 +8,11 @@ export const createWorldScene = (ending: boolean): SceneRig => {
   const group = new THREE.Group();
   const globe = new THREE.Group();
   group.add(globe);
-  const color = ending ? '#bcb0ff' : '#b5f4bf';
+  const color = ending ? '#8051c4' : '#087f86';
   const radius = 3.65;
-  const shell = new THREE.Mesh(new THREE.SphereGeometry(radius, 48, 32), new THREE.MeshStandardMaterial({color: '#081619', metalness: 0.52, roughness: 0.4, transparent: true, opacity: 0.92}));
+  const shell = new THREE.Mesh(new THREE.SphereGeometry(radius, 48, 32), new THREE.MeshStandardMaterial({color: '#6cabc6', metalness: 0.15, roughness: 0.48, transparent: true, opacity: 0.94}));
   globe.add(shell);
-  const grid = new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.SphereGeometry(radius * 1.005, 24, 12)), new THREE.LineBasicMaterial({color, transparent: true, opacity: 0.09}));
+  const grid = new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.SphereGeometry(radius * 1.005, 24, 12)), new THREE.LineBasicMaterial({color, transparent: true, opacity: 0.22}));
   globe.add(grid);
 
   const points: THREE.Vector3[] = [];
@@ -38,16 +38,16 @@ export const createWorldScene = (ending: boolean): SceneRig => {
     const mid = a.clone().add(b).normalize().multiplyScalar(radius * (1.2 + (i % 3) * 0.12));
     const curve = new THREE.CatmullRomCurve3([a, a.clone().lerp(mid, 0.65).normalize().multiplyScalar(radius * 1.22), mid, b.clone().lerp(mid, 0.65).normalize().multiplyScalar(radius * 1.22), b]);
     paths.push(curve);
-    const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(60)), new THREE.LineBasicMaterial({color: i % 4 === 0 ? '#f3c37c' : color, transparent: true, opacity: 0.42}));
+    const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(60)), new THREE.LineBasicMaterial({color: i % 4 === 0 ? '#b86516' : color, transparent: true, opacity: 0.62}));
     globe.add(line);
     arcs.push(line);
-    const packet = orb(i % 4 === 0 ? '#f3c37c' : color, 0.043);
+    const packet = orb(i % 4 === 0 ? '#b86516' : color, 0.055);
     globe.add(packet);
     packets.push(packet);
   }
   const orbits: THREE.Mesh[] = [];
   for (let i = 0; i < 3; i++) {
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(radius * (1.36 + i * 0.13), 0.008, 6, 160), glowMaterial(color));
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(radius * (1.36 + i * 0.13), 0.014, 6, 160), glowMaterial(color));
     ring.rotation.set(1.2 + i * 0.32, i * 0.4, i * 0.8);
     globe.add(ring);
     orbits.push(ring);

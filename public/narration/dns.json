@@ -1,0 +1,17 @@
+{
+  "signature": "85566ed244d07ab7a6eae839f888e86696c25611940eb5d67a8bad7e92aefd27",
+  "durationSeconds": 4.368,
+  "rate": "+23%",
+  "captions": [
+    {
+      "startMs": 100,
+      "endMs": 1961,
+      "text": "域名，是网络的名字。"
+    },
+    {
+      "startMs": 1961,
+      "endMs": 4368,
+      "text": "逐级查询，找到地址。"
+    }
+  ]
+}

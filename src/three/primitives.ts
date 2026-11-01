@@ -13,8 +13,9 @@ export const link = (a: THREE.Vector3, b: THREE.Vector3, color: string, radius =
 
 export const orb = (color: string, radius = 0.09): THREE.Group => {
   const group = new THREE.Group();
-  group.add(new THREE.Mesh(new THREE.SphereGeometry(radius, 12, 10), glowMaterial('#efffff', 1.5)));
-  const halo = new THREE.Mesh(new THREE.SphereGeometry(radius * 2.8, 12, 10), new THREE.MeshBasicMaterial({color, transparent: true, opacity: 0.12, depthWrite: false, blending: THREE.AdditiveBlending}));
+  group.add(new THREE.Mesh(new THREE.SphereGeometry(radius, 12, 10), new THREE.MeshBasicMaterial({color, transparent: true, opacity: 0.42, depthWrite: false, toneMapped: false})));
+  group.add(new THREE.Mesh(new THREE.SphereGeometry(radius * 0.48, 10, 8), glowMaterial('#efffff', 3.5)));
+  const halo = new THREE.Mesh(new THREE.SphereGeometry(radius * 2.6, 12, 10), new THREE.MeshBasicMaterial({color, transparent: true, opacity: 0.13, depthWrite: false, toneMapped: false}));
   group.add(halo);
   return group;
 };

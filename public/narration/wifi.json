@@ -1,0 +1,17 @@
+{
+  "signature": "13996f3a96ab7055e1c6ced9f4ca1b4d2d0ec3d13977ac7ddd5acd949fc73410",
+  "durationSeconds": 4.392,
+  "rate": "+10%",
+  "captions": [
+    {
+      "startMs": 100,
+      "endMs": 2386,
+      "text": "告别网线，无线接入。"
+    },
+    {
+      "startMs": 2386,
+      "endMs": 4392,
+      "text": "比特穿过空气。"
+    }
+  ]
+}

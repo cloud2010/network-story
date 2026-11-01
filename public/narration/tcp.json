@@ -1,0 +1,17 @@
+{
+  "signature": "99103a95be3c5661c53267d85496a3977bbb398eb13e9f6e2dc63873bf4d7060",
+  "durationSeconds": 4.368,
+  "rate": "+25%",
+  "captions": [
+    {
+      "startMs": 100,
+      "endMs": 1960,
+      "text": "网络有了统一协议。"
+    },
+    {
+      "startMs": 1960,
+      "endMs": 4368,
+      "text": "三次握手，可靠传输。"
+    }
+  ]
+}

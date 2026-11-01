@@ -1,0 +1,17 @@
+{
+  "signature": "9412ec48a56f581521573b0257f0fb53f0dbf439b746e22bc798937b6dd003f1",
+  "durationSeconds": 4.296,
+  "rate": "+10%",
+  "captions": [
+    {
+      "startMs": 100,
+      "endMs": 1807,
+      "text": "5G 开启商用。"
+    },
+    {
+      "startMs": 1807,
+      "endMs": 4296,
+      "text": "低时延，让万物协同。"
+    }
+  ]
+}

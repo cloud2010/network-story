@@ -9,7 +9,8 @@
     "still": "remotion still NetworkChronicle out/frame.png",
     "typecheck": "tsc --noEmit",
     "review": "node scripts/render-review.mjs",
-    "validate": "node scripts/validate-motion.mjs"
+    "validate": "node scripts/validate-motion.mjs",
+    "narration": "python scripts/generate-narration.py"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.0",
